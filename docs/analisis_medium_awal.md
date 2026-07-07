@@ -1,21 +1,21 @@
-# Laporan Analisis Statis: Hard Level (CrackMe-05)
+# Laporan Analisis Statis: Medium Level (CrackMe-04)
 
 ## Triage
-- **Nama File**: `mbb.exe`
-- **Tipe File**: PE32+ executable (console) x86-64
-- **Difficulty**: 5.0 (Hard)
+- **Nama File**: `Untitled3.exe`
+- **Tipe File**: PE32+ executable (console) x86-64 / C++ Application
+- **Difficulty**: 2.2 (Medium)
 
 ## Strings
-Meskipun biner terproteksi, string fungsional berikut berhasil diidentifikasi di area memori statis:
-- `">>> MBB <<<"` (Identitas aplikasi runtime)
-- `"[!] Enter The Key : "` (Prompt autentikasi kunci)
-- `"DECRYPTED FLAG: "` (Header output data rahasia)
+Hasil ekstraksi string menggunakan Ghidra menunjukkan beberapa pengenal interaksi aktif:
+- `"user: "` (Instruksi input nama pengguna)
+- `"password: "` (Instruksi input kata sandi)
+- `"GOOD!"` (Indikator kecocokan lisensi)
+- `"BAD >:("` (Indikator kegalangan lisensi)
 
 ## Import Table
-Pemeriksaan struktur tabel impor konvensional mengalami kendala akibat adanya teknik *Control Flow Fragmentation* yang memicu error `bad instruction data` pada Ghidra. Namun biner terdeteksi melakukan instruksi manipulasi memori tingkat rendah secara langsung pada fungsi hotspot `FUN_14001e860`:
-- `INSB` (Input String dari Port)
-- `SCASB` (Scan String Byte)
-- Modifikator instruksi `LOCK` untuk sinkronisasi runtime multiprosesor.
+Program memanfaatkan library standar dinamis `KERNEL32.dll` beserta fungsi standard library C++ (`std::string`):
+- `std::string::length` (Untuk menghitung jumlah karakter input)
+- `std::string::operator[]` (Untuk melakukan iterasi array karakter)
 
 ## Kesimpulan awal
-Biner ini dirancang dengan proteksi *Anti-Disassembly* tingkat tinggi untuk mengacaukan pembacaan decompiler otomatis. Program tidak membandingkan kunci secara statis, melainkan menggunakan fungsi internal khusus untuk melakukan dekripsi data rahasia secara *runtime* jika kunci input valid. Melalui analisis mendalam, kunci valid ditemukan berupa string `xQ9_vP4_tK2_mZ8` yang sukses mengekstrak *flag* terenkripsi asli pada lingkungan eksekusi terminal.
+Program ini menerapkan mekanisme pemeriksaan *checksum* dinamis berbasis nama pengguna (*username*). Setiap karakter dari *username* diiterasi di dalam loop, dikalikan dengan konstanta `4`, lalu diakumulasikan ke memori. Hasil akhir perhitungan ini wajib sama dengan *password* yang dimasukkan pengguna agar memicu output `"GOOD!"`. Skema ini berhasil dibuktikan secara dinamis melalui kombinasi input `abcd` dan `1576`.
