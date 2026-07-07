@@ -1,25 +1,28 @@
-# Static Analysis Lab: Investigasi Malware Cryptojacking
+# Static Analysis Laboratory: PE & ELF Binary Analysis
 
-Selamat datang di repositori laboratorium analisis statis saya. Repositori ini didedikasikan untuk mendokumentasikan proses eksplorasi dan pembedahan *binary* PE dan ELF yang saya temukan di lapangan.
+Repositori ini merupakan dokumentasi komprehensif hasil praktikum mata kuliah *Reverse Engineering* (Semester 4). Fokus utama repositori ini adalah melakukan pembedahan statis (*static analysis*) terhadap berbagai sampel biner, mulai dari tantangan *CrackMe* hingga analisis *real-world malware*.
 
-## Status Proyek
-Saat ini saya sedang berada dalam tahap awal investigasi terhadap sebuah sampel *binary* yang dicurigai sebagai agen *cryptojacking*. Saya mendokumentasikan setiap temuan secara *real-time* seiring dengan berkembangnya analisis yang saya lakukan.
+## Struktur Repositori
+* `docs/` : Berisi laporan analisis mendalam untuk setiap sampel biner.
+    * `analisis_easy.md` : Analisis tantangan tingkat *Easy* (`code.exe`).
+    * `analisis_medium.md` : Analisis tantangan tingkat *Medium* (`Untitled3.exe`).
+    * `analisis_hard.md` : Analisis tantangan tingkat *Hard* (`mbb.exe`).
+    * `analisis_cryptojacking_elf.md` : Analisis biner *Malware Cryptojacking* (y11.elf).
 
-## Temuan Awal
-Saya baru saja mengamankan satu sampel biner (format ELF) dari repositori MalwareBazaar. Berikut adalah beberapa detail awal yang baru saja saya ekstrak:
-- **Nama File**: `y11` (SHA256: `b20f39fc00d242e706b6c30367ad811c676e0575050a4ec2f30104b696944b49`)
-- **Tipe File**: ELF 64-bit LSB (Executable)
-- **Compiler**: GCC 13.2.1 (Alpine Linux)
-- **Status Analisis**: Sedang berlangsung (Tahap identifikasi karakteristik awal)
+## Metodologi Analisis
+Setiap laporan disusun mengikuti standar struktur pelaporan laboratorium yang wajib:
+1. **Triage**: Identifikasi metadata, hash (SHA256/MD5), dan arsitektur biner.
+2. **Strings**: Ekstraksi teks karakter statis untuk menemukan Indikator Kompromi (IoC).
+3. **Import Table**: Analisis dependensi pustaka sistem dan fungsi API yang digunakan.
+4. **Kesimpulan awal**: Sintesis tujuan fungsional dan perilaku biner berdasarkan temuan teknis.
 
-## Dokumentasi Analisis
-Saya sedang menyusun laporan teknis secara bertahap di folder `/docs`. Saat ini, saya baru saja menyelesaikan fase *triage* dan ekstraksi *strings* awal menggunakan Ghidra. Temuan sementara mengindikasikan adanya referensi ke protokol *mining* Stratum dan beberapa *string* mencurigakan terkait XMRig.
+## Informasi Penulis
+* **Nama**: Yudhistira Baskoro Adi Admojo (Sri Yulianingsih Agustin)
+* **Mata Kuliah**: Reverse Engineering
+* **Status Lab**: Lengkap (Analisis Biner PE & ELF)
 
-## Rencana Analisis Selanjutnya
-Untuk memvalidasi temuan awal, saya akan melanjutkan ke tahap berikutnya:
-1. Melakukan dekompilasi fungsi utama untuk memahami alur logika eksekusi.
-2. Memetakan *Import Table* untuk melihat interaksi dengan sistem operasi.
-3. Mencoba melakukan eksekusi dinamis di lingkungan *sandbox* terisolasi guna memverifikasi apakah benar terjadi lonjakan penggunaan CPU secara ekstrem.
+## Aturan Keamanan
+Seluruh file biner asli **tidak diunggah** ke dalam repositori ini untuk mencegah eksekusi yang tidak disengaja. Repositori ini murni untuk tujuan riset edukasi keamanan siber.
 
-## Disclaimer
-Analisis ini dilakukan murni untuk tujuan pembelajaran akademis dalam mata kuliah Reverse Engineering. Seluruh prosedur dilakukan di dalam lingkungan VM yang terisolasi sepenuhnya untuk menjaga keamanan sistem utama.
+---
+*Dibuat untuk kebutuhan tugas praktikum Reverse Engineering - Universitas Amikom Yogyakarta 2026.*
