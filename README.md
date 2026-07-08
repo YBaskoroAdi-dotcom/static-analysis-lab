@@ -17,7 +17,7 @@ Setiap laporan disusun mengikuti standar struktur pelaporan laboratorium yang wa
 4. **Kesimpulan awal**: Sintesis tujuan fungsional dan perilaku biner berdasarkan temuan teknis.
 
 ## Informasi Penulis
-* **Nama**: Yudhistira Baskoro Adi Admojo (Sri Yulianingsih Agustin)
+* **Nama**: Yudhistira Baskoro Adi Admojo
 * **Mata Kuliah**: Reverse Engineering
 * **Status Lab**: Lengkap (Analisis Biner PE & ELF)
 
